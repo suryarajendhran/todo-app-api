@@ -3,21 +3,22 @@ const {
   getAllTodos,
   createTodo,
   updateTodo,
+  deleteTodo,
 } = require("../controllers/TodoController");
 
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const todos = await getAllTodos();
-  res.status(200).json(todos);
+  res.status(200).json(await getAllTodos());
 });
 router.post("/", async (req, res) => {
-  const todo = await createTodo(req.body);
-  res.status(200).json(todo);
+  res.status(200).json(await createTodo(req.body));
 });
 router.put("/", async (req, res) => {
-  const updatedTodo = await updateTodo(req.body);
-  res.status(200).json(updatedTodo);
+  res.status(200).json(await updateTodo(req.body));
 });
+router.delete("/", async (req, res) => {
+  res.status(200).json(await deleteTodo(req.body));
+})
 
 module.exports = router;

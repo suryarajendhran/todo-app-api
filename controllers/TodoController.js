@@ -4,26 +4,36 @@ const { db } = require("../db/db");
 class TodoController {
   async getAllTodos() {
     const todos = await db("todos").select(["id", "description", "completed"]);
-    console.log(todos);
     return todos;
   }
 
   async createTodo(todo) {
-    const [_todo] = await db("todos")
+    const createdTodo = await db("todos")
       .insert({
         description: todo.description,
-        completed: false
+        completed: false,
       })
       .returning("*");
-    return _todo;
+    const todos = await db("todos").select("*");
+    return { createdTodo, todos };
   }
 
   async updateTodo(todo) {
-    const updatedTodo = await db("todos").where("id", todo.id).update({
-      description: todo.description,
-      completed: todo.completed ?? false,
-    }).returning('*');
-    return updatedTodo;
+    const updatedTodo = await db("todos")
+      .where("id", todo.id)
+      .update({
+        description: todo.description,
+        completed: todo.completed ?? false,
+      })
+      .returning("*");
+    const todos = await db("todos").select("*");
+    return { updatedTodo, todos };
+  }
+
+  async deleteTodo({ id }) {
+    const deletedTodo = await db("todos").where("id", id).del().returning("*");
+    const todos = await db("todos").select("*");
+    return { deletedTodo, todos };
   }
 }
 

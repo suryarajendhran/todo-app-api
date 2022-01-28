@@ -5,6 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
+    "dev:db": "docker run -e POSTGRES_PASSWORD=secret -p 5432:5432 -d postgres:14.1",
+    "db:migrate:new": "npx knex migrate:make --knexfile db/knexfile.js",
+    "db:migrate": "npx knex migrate:latest --knexfile db/knexfile.js",
+    "db:rollback": "npx knex migrate:rollback --knexfile db/knexfile.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "suryarajendhran",

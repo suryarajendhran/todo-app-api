@@ -1,7 +1,7 @@
 const knex = require("knex");
 const knexfile = require("./knexfile");
 
-const db = knex(knexfile[process.env || 'development']);
+const db = knex(knexfile['development']);
 
 const setupDatabase = async () => db.migrate.latest();
 

@@ -1,24 +1,22 @@
 const express = require("express");
-const {
-  getAllTodos,
-  createTodo,
-  updateTodo,
-  deleteTodo,
-} = require("../controllers/TodoController");
+const TodoController = require("../controllers/TodoController");
 
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  res.status(200).json(await getAllTodos());
+  res.status(200).json(await TodoController.getAllTodos());
 });
 router.post("/", async (req, res) => {
-  res.status(200).json(await createTodo(req.body));
+  res.status(200).json(await TodoController.createTodo(req.body));
 });
+router.delete("/completed", async (req, res) => {
+  res.status(200).json(await TodoController.clearCompletedTodos());
+})
 router.put("/", async (req, res) => {
-  res.status(200).json(await updateTodo(req.body));
+  res.status(200).json(await TodoController.updateTodo(req.body));
 });
 router.delete("/", async (req, res) => {
-  res.status(200).json(await deleteTodo(req.body));
+  res.status(200).json(await TodoController.deleteTodo(req.body));
 })
 
 module.exports = router;

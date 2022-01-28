@@ -35,6 +35,15 @@ class TodoController {
     const updatedTodos = await db("todos").select("*");
     return { deletedTodo, updatedTodos };
   }
+
+  async clearCompletedTodos() {
+    const clearedTodos = await db("todos")
+      .where("completed", true)
+      .del()
+      .returning("*");
+    const updatedTodos = await db("todos").select("*");
+    return { clearedTodos, updatedTodos };
+  }
 }
 
 module.exports = new TodoController();

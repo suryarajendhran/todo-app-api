@@ -17,6 +17,14 @@ class TodoController {
       .returning("*");
     return _todo;
   }
+
+  async updateTodo(todo) {
+    const updatedTodo = await db("todos").where("id", todo.id).update({
+      description: todo.description,
+      completed: todo.completed ?? false,
+    }).returning('*');
+    return updatedTodo;
+  }
 }
 
 module.exports = new TodoController();

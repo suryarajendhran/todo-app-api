@@ -14,8 +14,8 @@ class TodoController {
         completed: false,
       })
       .returning("*");
-    const todos = await db("todos").select("*");
-    return { createdTodo, todos };
+    const updatedTodos = await db("todos").select("*");
+    return { createdTodo, updatedTodos };
   }
 
   async updateTodo(todo) {
@@ -26,14 +26,14 @@ class TodoController {
         completed: todo.completed ?? false,
       })
       .returning("*");
-    const todos = await db("todos").select("*");
-    return { updatedTodo, todos };
+    const updatedTodos = await db("todos").select("*");
+    return { updatedTodo, updatedTodos };
   }
 
   async deleteTodo({ id }) {
     const deletedTodo = await db("todos").where("id", id).del().returning("*");
-    const todos = await db("todos").select("*");
-    return { deletedTodo, todos };
+    const updatedTodos = await db("todos").select("*");
+    return { deletedTodo, updatedTodos };
   }
 }
 

@@ -3,7 +3,7 @@ const { db } = require("../db/db");
 
 class TodoController {
   async getAllTodos() {
-    const todos = await db("todos").select(["id", "description", "completed"]);
+    const todos = await db("todos").select("*");
     return todos;
   }
 
